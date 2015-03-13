@@ -1,0 +1,1033 @@
+/*==============================================================================*/
+/* Global Selectors
+/*==============================================================================*/
+
+* {
+    position: relative;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+:focus {
+    outline:none;
+}
+::-moz-focus-inner {
+    border:0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    min-width: 768px;
+}
+
+body {
+    background-color: #2980B9;
+    font-family: "Myriad", sans-serif;
+    overflow-x: hidden;
+    font-smoothing: antialiased !important;
+    -webkit-font-smoothing: antialiased !important;
+    zoom: "100%";
+}
+
+pre {
+    background: none;
+    border: none;
+}
+
+label.inline {
+    float:left;
+    display: inline-block;
+}
+
+footer {
+    padding: 0;
+    margin: 0;
+    text-align: center !important;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+li {
+    text-align: left !important;
+    font-size: 24px;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+
+@font-face {
+    font-family: "Proxima Nova";
+    src: url("/proxima.woff");
+}
+
+@font-face {
+    font-family: "Myriad";
+    src: url("/myriadLight.woff");
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Myriad";
+    src: url("/myriad.woff");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Myriad";
+    src: url("/myriadBoldCondensed.woff");
+    font-weight: 600;
+}
+/*==============================================================================*/
+/* Global Classes
+/*==============================================================================*/
+
+.modal-backdrop {
+    z-index: 1000;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.disable {
+    cursor: default;
+}
+
+.breaker {
+    clear: both;
+    font-size: 1px;
+    line-height: 1px;
+    height: 1px;
+}
+
+.brand {
+    font-family: 'Philosopher', sans-serif;
+    font-weight: 400;
+}
+
+.billboard {
+    font-family: 'Philosopher', sans-serif;
+    padding: 0 0 10px 0;
+    font-size: 1000% !important;
+    -webkit-font-smoothing: antialiased;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+
+.shadow {
+    text-shadow: 1px 1px 1px rgba( 0,0,0, 0.35 );
+}
+
+.font-thin {
+    font-family: 'Myriad', sans-serif;
+    font-weight: 300;
+}
+
+.font-light {
+    font-family: 'Myriad', sans-serif;
+    font-weight: 400;
+}
+
+.font-semibold {
+    font-family: 'Myriad', sans-serif;
+    font-weight: 600;
+}
+
+.slide-card {
+    width: 83.33333333%;
+    margin: 20px auto;
+}
+
+.justify-text {
+    text-align: justify;
+}
+
+.centerfy {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    z-index: 100;
+}
+
+.mint {
+    color: #1abc9c;
+}
+.mint-bg {
+    background-color: #2980B9;
+}
+.belize {
+    color: #2980B9
+}
+.belize-bg {
+    background-color: #2980B9;
+}
+
+.navbar-brand {
+    padding: 8px;
+}
+
+.navbar {
+    background-color: rgba( 0, 0, 0, 0.8 );
+    border-bottom: 1px solid #444;
+    font-size: 12px;
+}
+
+.nav a {
+    color: #e4e6e5;
+    display: inline-block;
+    font-family: "Myriad", sans-serif;
+    font-weight: 600;
+}
+
+.nav li {
+    text-align: center;
+    white-space: nowrap;
+}
+.nav > li > a {
+    padding: 16px 15px;
+    margin: 0;
+}
+.nav > li > a:hover,
+.nav > li > a:focus {
+    background-color: inherit;
+    outline: none;
+}
+
+.slide {
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding-bottom: 65px;
+    padding-top: 50px;
+    text-align: center;
+}
+
+.half-slide {
+    height: 200px;
+    padding: 40px 0;
+}
+
+.half-slide-text {
+    line-height: 75%;
+    font-size: 56px;
+    text-align: right;
+    text-shadow: 1px 1px 1px rgba( 0,0,0, 0.35);
+}
+
+.title-row {
+    font-size: 45px;
+    padding-bottom: 50px;
+}
+
+.subtitle-row {
+    font-size: 35px;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.content-row {
+    padding-top: 45px;
+}
+.content-row i {
+    display: block;
+    margin: 0 auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+.content-row h2 {
+    font-size: 28px;
+    padding-bottom: 40px;
+}
+.content-row h4 {
+    font-family: "Myriad", sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+/*==============================================================================*/
+/* Sections
+/*==============================================================================*/
+
+/*------------------------------------------------------------------------------*/
+/* Modal
+/*------------------------------------------------------------------------------*/
+#feedback .close {
+    color: #fff;
+    opacity: 1;
+    text-shadow: 0px 1px 3px #999;
+}
+
+#feedback .modal-header {
+    border-color: #303030;
+}
+#feedback .modal-body {
+
+}
+#feedback .modal-title {
+    color: #a0a0a0;
+}
+#feedback .modal-subtitle {
+    background-color: #151515;
+    border-bottom: 5px solid #202020;
+    border-top: 5px solid #202020;
+    color: #a0a0a0;
+    font-size: 26px;
+    margin: 0 1px 0 0;
+    padding: 15px;
+    text-align: center;
+}
+#feedback .modal-content {
+    background-color: #101010;
+}
+
+#feedback .btn {
+    border-radius: 0;
+    transition: all ease-in .1s;
+}
+#feedback .btn-group.error {
+    border-color: #843534;
+    -webkit-box-shadow: 0 0 10px #F00;
+    box-shadow: 0 0 10px #F00;
+}
+#feedback .btn-group .btn {
+    color: #e4e6e5;
+    background-color: #121920;
+    border-color: #2c3e50;
+}
+#feedback .btn-group .btn.active {
+    background-color: #202d3b;
+    -webkit-box-shadow: inset 0 3px 10px rgba(0,0,0,0.5);
+    box-shadow: inset 0 3px 10px rgba(0,0,0,0.5);
+}
+#feedback .btn-group .btn:hover {
+    background-color: #2c3e50;
+    border-color: #34495E;
+}
+
+#feedback .row {
+    width: 100%;
+    margin: 10px 0;
+}
+
+#feedback i {
+    font-size: 40px;
+}
+
+#feedback i,
+#feedback b {
+    width: 100%;
+    padding: 0;
+    margin: 5px 0;
+    display: block;
+    text-align: center;
+}
+
+#feedback-form {
+    padding: 0;
+}
+
+#submit-feedback.row {
+    margin-top: 20px;
+}
+
+#submit-feedback-btn.btn {
+    font-size: 26px;
+    transition: all ease-in .25s;
+}
+
+#later {
+    font-size: 12px;
+    padding-top: 15px;
+    text-align: center;
+    color: white;
+}
+
+#later:hover {
+    text-decoration: underline;
+}
+
+#sign-up-form {
+    padding: 7.5px 15px;
+}
+
+#sign-up-form .form-group {
+    margin-bottom: 0;
+}
+
+/*------------------------------------------------------------------------------*/
+/* Header
+/*------------------------------------------------------------------------------*/
+#nav a {
+    float: left;
+    display: inline-block;
+}
+
+#WelcomeBack {
+    color: white;
+    font-size: 24px;
+    padding-top: 13px;
+    font-weight: 600;
+}
+
+#nav .fa {
+    padding-right: 5px;
+}
+
+#augur-nav-link {
+    width: 47px;
+    height: 47px;
+    padding: 2px;
+}
+#augur-nav-link .logo {
+    font-size: 60px;
+}
+#augur-nav-link .brand {
+    font-size: 25px;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+#get-early-access-link {
+    border-radius: 0;
+    padding: 13.5px;
+    font-size: 16px;
+}
+
+#get-early-access-link:hover {
+    -webkit-box-shadow: inset 0 3px 10px rgba(0,0,0,0.5);
+    box-shadow: inset 0 3px 10px rgba(0,0,0,0.5);
+}
+
+#get-early-access-link.btn-success:hover {
+    background-color: #5cb85c;
+    box-shadow: none;
+}
+
+#login-link {
+    padding: 13.5px;
+}
+
+#login-link .text {
+    font-size: 1.3em;
+}
+
+/*------------------------------------------------------------------------------*/
+/* UVP
+/*------------------------------------------------------------------------------*/
+#uvp {
+    height: 600px;
+
+    background-attachment: relative;
+    background-color: #101010;
+    background-image: url('');
+    background-position: center center;
+
+    color: #ffffff;
+
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#uvp h1 {
+    font-size: 54px;
+    padding-top: 50px;
+}
+#uvp h3 {
+    font-size: 40px;
+}
+#uvp h4 {
+    font-size: 32px;
+}
+#uvp .row {
+    padding-top: 25px;
+}
+/*------------------------------------------------------------------------------*/
+/* Simplicity
+/*------------------------------------------------------------------------------*/
+#simplicity {
+    background: #101010;
+    background-image: url('browserWindow.png');
+    background-position: 50.5% 60px;
+    background-repeat: no-repeat;
+}
+
+#simplicity .half-slide {
+    height: 300px;
+    padding: 0;
+}
+
+#simplicity .half-slide-text {
+    color: rgb(205,205,205);
+    padding-top: 15px;
+    text-align: center;
+}
+
+#simplicity pre {
+    color: white;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    margin: 0 auto;
+    width: 630px;
+    top: 120px;
+}
+
+#meta {
+    margin-top: -20px;
+    margin-left: 50px;
+}
+
+.simplicityTypingEffect {
+    margin-top: -5px;
+    margin-left: 50px;
+    font-size:150%;
+    width:26em;
+    white-space:nowrap;
+    overflow:hidden;
+    border-right: .1em solid black;
+    -webkit-animation: typing 5s steps(42, end), /* # of steps = # of characters */
+                        blink-caret 1s step-end infinite;
+    -moz-animation: typing 5s steps(42, end), /* # of steps = # of characters */
+                        blink-caret 1s step-end infinite;
+}
+
+.simplicityTypingEffect a {
+    text-decoration:none;
+    color: #66D9EF;
+}
+
+pre .red {
+    color: #f92672;
+}
+
+pre .green {
+    color: #a6e22e;
+}
+
+pre .yellow {
+    color: #e6db74;
+}
+
+pre .blue {
+    color: #66d9ef;
+}
+
+@-webkit-keyframes typing {
+    from { width: 0 }
+    to { width:26em }
+}
+
+@-moz-keyframes typing {
+    from { width: 0 }
+    to { width:26em }
+}
+
+@-webkit-keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+}
+
+@-moz-keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+}
+
+/*------------------------------------------------------------------------------*/
+/* Anonymous Traffic
+/*------------------------------------------------------------------------------*/
+#anonymous.gradient {
+    background:
+        -moz-linear-gradient(
+            center bottom,
+            rgba(0,0,0,0) 0%,
+            rgba(127,127,127,1) 100%
+        );
+    );
+    background: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgba(0,0,0,0)),
+        color-stop(1, rgba(127,127,127,1))
+    );
+}
+
+#anonymous {
+    background: #2980B9;
+    background-attachment: fixed;
+}
+
+#anonymous .half-slide {
+/*    background-color: rgba(255,255,255,0.9);
+*/}
+#anonymous .half-slide-text {
+    color: white;
+}
+/*------------------------------------------------------------------------------*/
+/* Customer Insights
+/*------------------------------------------------------------------------------*/
+#insights {
+    background-color: white;
+}
+
+#lastWell .font-semibold {
+    font-size: 48px;
+}
+
+#lastWell strong {
+    font-size: 36px;
+}
+
+#insights h2.last {
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+#insights .centerfy {
+    top: 45%;
+}
+
+.tree {
+    display: inline-block;
+}
+.tree ul {
+    padding: 0;
+}
+.tree ul ul {
+    padding: 100px 0 0 0;
+    position: relative;
+}
+
+.tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 180px 40px 0 40px;
+}
+/*We will use ::before and ::after to draw the connectors*/
+.tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 2px dashed #ccc;
+    width: 50%;
+    height: 180px;
+}
+.tree li::after {
+    right: auto;
+    left: 50%;
+    border-left: 2px dashed #ccc;
+}
+.tree li a::after {
+    right: auto;
+    left: 50%;
+    border-left: 2px dashed #ccc;
+}
+/* We need to remove left-right connectors from elements without any siblings */
+.tree li:only-child::after, .tree li:only-child::before {
+    display: none;
+}
+/* Remove space from the top of single children */
+.tree li:only-child {
+    padding-top: 0;
+}
+/* Remove left connector from first child and right connector from last child */
+.tree li:first-child::before, .tree li:last-child::after {
+    border: 0 none;
+}
+/* Adding back the vertical connector to the last nodes */
+.tree li:last-child::before {
+    border-right: 2px dashed #ccc;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+/* Time to add downward connectors from parents */
+.tree ul ul::before {
+    border-left: 2px dashed #ccc;
+    content: '';
+    height: 100px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    width: 0;
+}
+.tree .devices li a {
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 120px;
+    display: inline-block;
+
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    width: 130px;
+}
+
+.tree .devices ul::before {
+    height: 180px;
+}
+
+.tree .devices ul {
+    padding-top: 0;
+}
+
+#profile {
+    margin: 0 auto 50px auto;
+}
+
+#profile .navigation li {
+    padding: 9px 0 8px 0;
+}
+
+#profile .navigation a {
+    padding: 10px 15px;
+    text-transform: uppercase;
+    float: none;
+    transition: none;
+}
+
+#profile .user-info-block {
+    box-shadow: 0 5px 20px #cfcfcf;
+}
+
+#profile .user-info-block.popout {
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    margin: -50px 0 0 0;
+    width: initial;
+    right: 0;
+    height: inherit;
+}
+
+#profile .user-info-block.popout .user-body {
+    height: inherit;
+}
+
+#profile .user-body {
+    overflow-y: scroll;
+    height: 400px;
+}
+
+#profile .user-details .user-body .tab-content {
+    padding: 2.5% 0;
+    display: block;
+}
+
+#profile .user-body::-webkit-scrollbar-thumb {
+    background-color: #428BCA;
+}
+
+#profile .user-body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#profile .json dt,
+#profile .json dd {
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+#jsonResponse {
+    padding: 0 50px;
+}
+
+/*------------------------------------------------------------------------------*/
+/* Flip A Switch
+/*------------------------------------------------------------------------------*/
+#auspice {
+    background: #06ba8f;
+    background-attachment: fixed;
+}
+
+#auspice .half-slide-text {
+    text-align: left;
+    margin-top: 50px;
+    color: white;
+    line-height: 70%
+}
+
+/*------------------------------------------------------------------------------*/
+/* Content Personalization
+/*------------------------------------------------------------------------------*/
+#personalization {
+    background: white;
+}
+
+#personalization .tab-pane button {
+    color: white;
+    background-color: #06C;
+    border-color: #105296;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #105296;
+    border-bottom-width: 3px;
+    font-weight: bold;
+    padding: .5em 1em;
+}
+
+#personalization .nav-tabs {
+    border: none;
+    z-index: 50;
+}
+
+#personalization .nav-tabs li {
+    float: none;
+    display: inline-block;
+    border-bottom: none;
+    top: 1px;
+}
+
+#personalization .nav-tabs li.active {
+    background-color: white;
+}
+
+#personalization .row.header {
+    margin-bottom: 30px;
+}
+
+#personalization .tab-content {
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 20px #cfcfcf;
+}
+
+#personalization .tab-pane {
+    font-family: "Proxima Nova", 'Lucida Grande', Helvetica, sans-serif;
+    padding: 40px;
+    border: 1px;
+}
+
+#personalization .tab-pane a {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0066cc;
+}
+
+#personalization .tab-pane img {
+    float: none;
+}
+
+#personalization .tab-pane h1 {
+    font-family: "Proxima Nova";
+    font-size: 2em;
+    text-align: center;
+    letter-spacing: -1px;
+    margin-bottom: .5em;
+    line-height: 1em;
+    font-weight: bold;
+    display: block;
+}
+
+#personalization h2 {
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+#personalization .font-semibold {
+    font-size: 32px;
+}
+#personalization .basecamp-logo img {
+    margin: 0;
+}
+#personalization .basecamp-logo {
+    text-align: left;
+}
+
+#personalization .basecamp-menu {
+    text-align: right;
+}
+#personalization .basecamp-menu a {
+    padding: 0 5px;
+}
+#personalization .login-button {
+    font-size: .9em;
+    float: none;
+    margin-left: 1%;
+}
+#personalization .click-goal {
+    font-size:1.35em;
+    background-color:#1a7de6;
+    margin: 20px 0;
+}
+
+/*------------------------------------------------------------------------------*/
+/* Try Augur Now!
+/*------------------------------------------------------------------------------*/
+#try-now {
+    background-color: #070a0d;
+    background-repeat: repeat;
+    /*background-image: url('bg.gif');*/
+}
+
+#give-it-a-shot { }
+
+#give-it-a-shot .text {
+    margin-bottom: 40px;
+}
+/*------------------------------------------------------------------------------*/
+/* Footer
+/*------------------------------------------------------------------------------*/
+#footer {
+    background-color: #121920;
+    color: #e4e6e5;
+    -webkit-box-shadow: inset 0 3px 10px rgba(0,0,0,0.5);
+    box-shadow: inset 0 3px 10px rgba(0,0,0,0.5);
+}
+
+#footer a {
+    text-decoration: none;
+    outline: 0;
+}
+
+#footer a:hover {
+    font-size: 18px;
+}
+
+#footer .slide {
+    padding: 18px;
+    outline-style: none;
+}
+
+#contact a {
+    display: inline-block;
+}
+
+#contact span {
+    color: white;
+}
+
+#contact i {
+    font-size: 24px;
+    padding-right: 10px;
+}
+
+#contact .address p {
+    padding-bottom: 20px;
+}
+
+/*==============================================================================*/
+/* Components
+/*==============================================================================*/
+
+/*------------------------------------------------------------------------------*/
+/* Arrow Controls
+/*------------------------------------------------------------------------------*/
+#arrows {
+    bottom: 5%;
+    height: 80px;
+    position: fixed;
+    right: 2.5%;
+    width: 80px;
+    z-index: 1000;
+}
+#arrows div {
+    background-image: url('/website-arrows.png');
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    width: 30px;
+}
+#arrows div.disabled {
+    cursor: default;
+}
+
+#arrow-up {
+    background-position: 30px 0;
+    left: 25px;
+    top: 0;
+}
+#arrow-up.disabled {
+    background-position: 0 0;
+}
+
+#arrow-down {
+    background-position: 30px -30px;
+    left: 25px;
+    bottom: 0;
+}
+#arrow-down.disabled {
+    background-position: 0 -30px;
+}
+
+#arrow-left {
+    background-position: 30px -60px;
+    left: 0;
+    top: 25px;
+}
+#arrow-left.disabled {
+    background-position: 0 -60px;
+}
+
+#arrow-right {
+    background-position: 30px -90px;
+    right: 0;
+    top: 25px;
+}
+#arrow-right.disabled {
+    background-position: 0 -90px;
+}
+
+/*==============================================================================*/
+/* Responsive CSS
+/*==============================================================================*/
+
+@media (min-width: 768px) {
+    #address {
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+}
+
+@media (min-width: 992px) {
+    footer {
+        text-align: initial;
+    }
+
+    #uvp {
+        background-position: -70% 0, 170% 0;
+    }
+
+    #footer .social {
+        text-align: right;
+    }
+
+    #address {
+        text-align: left;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    #personalization .personal-profiles li {
+        margin: 0 40px;
+    }
+}
