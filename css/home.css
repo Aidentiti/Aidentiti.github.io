@@ -146,9 +146,9 @@ li {
 }
 
 .slide-card {
+    text-align: center;
     width: 83.33333333%;
     margin: 20px auto;
-    text-align: center;
 }
 
 .justify-text {
