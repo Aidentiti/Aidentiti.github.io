@@ -1,2 +1,2 @@
 
-document.getElementById("demo").innerHTML += "\n" + JSON.stringify(BeaverBird.data(), null, 2)
+document.getElementById("demo").innerHTML += "\n" + JSON.stringify(Aidentiti.data(), null, 2)
