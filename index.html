@@ -125,9 +125,8 @@ try {
     var dimensions = {
         'dimension1': getCookie(/_ga=GA[0-9].[0-9].(\d+)/, document.cookie).pop()||'unknown',
         'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown',
-        'dimension3': Aidentiti.uid(),
-        'dimension4': document.getElementById("fp").innerHTML,
-        'dimension5': document.getElementById("hstsValue").innerHTML
+        'dimension3': Aidentiti.uid()||'unknown',
+        'dimension4': document.getElementById("fp").innerHTML||'unknown'
     };
     
     // GA actions
