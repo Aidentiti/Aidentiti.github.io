@@ -17,7 +17,7 @@
 <meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
 <script src="js/aidentiti.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject_src.js"></script>
+
 </head><body>
 
 <section id="anonymous"><div class="half-slide"><div class="container"><div class="pull-right"><h1 class="half-slide-text font-thin">Aidentiti - JPN (Identity)</h1><h4 class="half-slide-text font-thin">Identifying Anonymous Traffic</h4></div></div></div></section>
@@ -126,7 +126,8 @@ try {
         'dimension1': getCookie(/_ga=GA[0-9].[0-9].(\d+)/, document.cookie).pop()||'unknown',
         'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown',
         'dimension3': Aidentiti.uid()||'unknown',
-        'dimension4': document.getElementById("fp").innerHTML||'unknown'
+        'dimension4': document.getElementById("fp").innerHTML||'unknown',
+        'dimension5': document.getElementById("hstsValue").innerHTML||'unknown'
     };
     
     // GA actions
