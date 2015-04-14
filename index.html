@@ -41,12 +41,13 @@
                             
                             var pos = position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng;
                             console.log(pos);
-                            document.getElementById("NF").innerHTML = pos;
+                            
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
                         }
                     });
+                    document.getElementById("NF").innerHTML = pos;
                     
                 });
             </script>
