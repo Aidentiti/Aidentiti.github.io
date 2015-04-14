@@ -42,9 +42,8 @@
                             var position = $.parseJSON(data);
                             $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng);
                             
-                            var pos = position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng;
-                            nf = pos;
-                            console.log(pos);
+                            var pos = position.ip;
+                            nf = pos;                         
                             
                         },
                         error: function() {
@@ -52,8 +51,7 @@
                         }
                     });              
                 var d4 = new Date();
-                  console.log("Time took to get NF: " + (d4 - d3) + "ms");
-                document.getElementById("NF").innerHTML = nf;    
+                console.log("Time took to get NF: " + (d4 - d3) + "ms");                
                 });
             </script>
         </div>
@@ -131,7 +129,7 @@ try {
     var dimensions = {
         'dimension1': getCookie(/_ga=GA[0-9].[0-9].(\d+)/, document.cookie).pop()||'unknown',
         'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown',
-        'dimension3': document.getElementById("NF").innerHTML||'unknown',
+        'dimension3': nf||'unknown',
         'dimension4': document.getElementById("fp").innerHTML||'unknown'
     };
     
