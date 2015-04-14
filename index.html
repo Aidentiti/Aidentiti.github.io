@@ -31,9 +31,7 @@
         <h3>Your NF id is:</h3>
             <h3 id="NF"></h3>
             <script>
-                var d3 = new Date();
-                var nf;
-                
+                var d3 = new Date();                
                 $(document).ready(function() {
                     $.ajax({
                         url: 'http://api.hostip.info/get_json.php?position=true',
@@ -43,7 +41,7 @@
                             $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng);
                             
                             var pos = position.ip;
-                            nf = pos;                         
+                            console.log(pos);                      
                             
                         },
                         error: function() {
@@ -52,7 +50,7 @@
                     });              
                 var d4 = new Date();
                 console.log("Time took to get NF: " + (d4 - d3) + "ms");
-                console.log(pos);    
+                    
                 });
             </script>
         </div>
