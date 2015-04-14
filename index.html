@@ -31,6 +31,9 @@
         <h3>Your NF id is:</h3>
             <h3 id="NF"></h3>
             <script>
+                var d3 = new Date();
+                var nf;
+                
                 $(document).ready(function() {
                     $.ajax({
                         url: 'http://api.hostip.info/get_json.php?position=true',
@@ -40,15 +43,16 @@
                             $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng);
                             
                             var pos = position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng;
+                            nf = pos;
                             console.log(pos);
                             
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
                         }
-                    });
-                    document.getElementById("NF").innerHTML = pos;
-                    
+                    });              
+                var d4 = new Date();
+                  console.log("Time took to get NF: " + (d4 - d3) + "ms");                        
                 });
             </script>
         </div>
@@ -65,7 +69,7 @@
                 var fp = new DF();
                 fp.get(function(result) {
                   var d2 = new Date();
-                  console.log("Time took to calculate the fingerprint: " + (d2 - d1) + "ms");
+                  console.log("Time took to calculate DF: " + (d2 - d1) + "ms");
                   console.log(result);
                   document.getElementById("fp").innerHTML = result;
                 });
