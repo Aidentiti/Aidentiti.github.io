@@ -40,6 +40,7 @@
                             $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng);
                             
                             var pos = position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng;
+                            console.log(pos);
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
