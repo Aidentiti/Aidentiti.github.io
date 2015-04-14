@@ -37,13 +37,15 @@
                         dataType: 'html',
                         success: function(data) {
                             var position = $.parseJSON(data);
-                            $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ', ' + position.lng);
+                            $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng);
+                            
+                            var pos = position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng;
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
                         }
                     });
-                    document.getElementById("NF").innerHTML = position;
+                    document.getElementById("NF").innerHTML = pos;
                 });
             </script>
         </div>
