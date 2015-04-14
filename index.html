@@ -29,7 +29,22 @@
         <div class="lead">1.</div>
         <div style="height:inherit; width:100%;height:20%;word-wrap:break-word" class="well text-left"><h6 id="jsonView"></h6>
         <h3>Your NF id is:</h3>
-            <h3 id="result"></h3>
+            <h3 id="NF"></h3>
+            <script>
+                $(document).ready(function() {
+                    $.ajax({
+                        url: 'http://api.hostip.info/get_json.php?position=true',
+                        dataType: 'html',
+                        success: function(data) {
+                            var position = $.parseJSON(data);
+                            $('#NF').append('IP: ' + position.ip + '<br>country: ' + position.country_code + '<br>city: ' + position.city + '<br>LatLng: ' + position.lat + ', ' + position.lng);
+                        },
+                        error: function() {
+                            $('#NF').append('geolocation not supported');
+                        }
+                    });
+                });
+            </script>
         </div>
     </div>
         
