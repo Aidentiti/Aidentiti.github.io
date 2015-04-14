@@ -26,7 +26,7 @@
 <section id="insights"><div class="slide container"><h4 style="font-size:20px;" class="font-thin">Aidentiti is a feature rich JavaScript library that is able to identify anonymous visitors, by using device fingerprints and other advanced methods.</h4><h6 class="font-thin">Currently v0.17</h6><h2 class="well well-sm font-thin">1. An anonymous visitor comes to your site...</h2><h2></h2><div class="panel panel-default"><div class="panel-heading"><div class="panel-title"><h2 class="font-thin">2. Aidentiti identifies the visitor&apos;s device... <br> and returns a Device Fingerprint and togehter with a Network Fingerprint</h2></div></div><div class="panel-body"><div class="row">
     <div class="col-lg-12">
     <div class="col-lg-6">
-        <div class="lead">1.</div>
+        
         <div style="height:inherit; width:100%;height:20%;word-wrap:break-word" class="well text-left"><h6 id="jsonView"></h6>
         <h3>Your NF id is:</h3>
             <h3 id="NF"></h3>
@@ -58,7 +58,7 @@
     </div>
         
     <div class="col-lg-6">
-        <div class="lead">2.</div>
+        
         <div style="height:inherit; width:100%;word-wrap:break-word" class="well text-left"><h6 id="jsonView"></h6>
         <h3>Your DF id is:</h3>
             <h3><i id="fp"/></h3>
@@ -129,7 +129,7 @@ try {
     var dimensions = {
         'dimension1': getCookie(/_ga=GA[0-9].[0-9].(\d+)/, document.cookie).pop()||'unknown',
         'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown',
-        'dimension3': nf||'unknown',
+        'dimension3': function.get(nf)||'unknown',
         'dimension4': document.getElementById("fp").innerHTML||'unknown'
     };
     
