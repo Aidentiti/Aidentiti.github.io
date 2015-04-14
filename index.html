@@ -41,12 +41,13 @@
                             
                             var pos = position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng;
                             console.log(pos);
+                            document.getElementById("NF").innerHTML = pos;
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
                         }
                     });
-                    document.getElementById("NF").innerHTML = pos;
+                    
                 });
             </script>
         </div>
@@ -91,7 +92,7 @@
                     <li>Refresh the page.</li>
                     <li>Open the same web address in a "private"/"incognito" window.</li>
                     <li>Clear your browser cookies and refresh the page.</li>
-                    <li>Visit the page via different devices.</li>
+                    <li>Visit the page on all your different devices.</li>
                 </ul> 
                 </div>
              </div>            
