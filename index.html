@@ -38,7 +38,7 @@
                         dataType: 'html',
                         success: function(data) {
                             var position = $.parseJSON(data);
-                            $('#NF').append('IP: ' + position.ip + '<br>country: ' + position.country_code + '<br>city: ' + position.city + '<br>LatLng: ' + position.lat + ', ' + position.lng);
+                            $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ', ' + position.lng);
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
