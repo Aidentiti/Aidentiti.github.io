@@ -70,6 +70,7 @@
         var murmur = that.x64hash128(newKeys.join("~~~"), 31);
         return done(murmur);
       });
+        console.log(keys.toString());
     },
 
     userAgentKey: function(keys) {
