@@ -40,7 +40,7 @@
                             var position = $.parseJSON(data);
                             $('#NF').append(position.ip + '|' + position.country_code + '|' + position.city + '|' + position.lat + ',' + position.lng);
                             
-                            var pos = position.ip;
+                            var pos = position.ip + '|' + position.lat + ',' + position.lng;
                             console.log(pos);                      
                             
                         },
