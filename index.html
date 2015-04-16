@@ -31,7 +31,8 @@
         <h3>Your NF id is:</h3>
             <h3 id="NF"></h3>
             <script>
-                var d3 = new Date();                
+                var d3 = new Date();
+                var p = 1;
                 $(document).ready(function() {
                     $.ajax({
                         url: 'http://api.hostip.info/get_json.php?position=true',
@@ -42,7 +43,7 @@
                             
                             var pos = position.ip + '|' + position.lat + ',' + position.lng;
                             console.log(pos);                      
-                            
+                            p = pos;
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
@@ -52,7 +53,7 @@
                 console.log("Time took to get NF: " + (d4 - d3) + "ms");
                     
                 });
-                console.log(pos);
+                console.log(p);
             </script>
         </div>
     </div>
