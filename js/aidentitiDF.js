@@ -47,25 +47,32 @@
         console.log(msg);
       }
     },
+      
+      // keys = this.UAK(keys); User Agent Key
+      // keys = this.CSK(keys); Client Storage Key
+      // keys = this.TLK(keys); Time language Key
+      // keys = this.
     get: function(done){
       var keys = [];
-      keys = this.userAgentKey(keys);
-      keys = this.languageKey(keys);
-      keys = this.colorDepthKey(keys);
-      keys = this.screenResolutionKey(keys);
-      keys = this.timezoneOffsetKey(keys);
-      keys = this.sessionStorageKey(keys);
-      keys = this.localStorageKey(keys);
-      keys = this.indexedDbKey(keys);
-      keys = this.addBehaviorKey(keys);
-      keys = this.openDatabaseKey(keys);
-      keys = this.cpuClassKey(keys);
-      keys = this.platformKey(keys);
-      keys = this.doNotTrackKey(keys);
-      keys = this.pluginsKey(keys);
-      keys = this.canvasKey(keys);
-      keys = this.webglKey(keys);
-      var that = this;
+      keys = this.userAgentKey(keys);           // everything should be stable apart from Version Numbers (but they only increase)
+      keys = this.languageKey(keys);            // should be stable
+      keys = this.colorDepthKey(keys);          // should be stable
+      keys = this.screenResolutionKey(keys);    // should be stable except for multi monitor usage - desktop/notebook only
+      keys = this.timezoneOffsetKey(keys);      // should be stable for a given location
+      keys = this.sessionStorageKey(keys);      // should be stable
+      keys = this.localStorageKey(keys);        // should be stable
+      keys = this.indexedDbKey(keys);           // should be stable
+      keys = this.addBehaviorKey(keys);         // should be stable
+      keys = this.openDatabaseKey(keys);        // should be stable
+      keys = this.cpuClassKey(keys);            // should be stable
+      keys = this.platformKey(keys);            // should be stable
+      keys = this.doNotTrackKey(keys);          // should be stable
+      keys = this.pluginsKey(keys);             // order should be stable - Version Numbers change (but only increase) - plugins may be removed or added - useless for mobile devices
+      keys = this.canvasKey(keys);              // should be stable
+      keys = this.webglKey(keys);               // should be stable
+      // keys = this.protectKey(keys);              // should be stable
+      // keys = this.webrtcKey(keys);               // should be stable if available
+      var that = this;                          // Font order should be stable - Fonts may be removed or added - useless on mobile devices
       this.fontsKey(keys, function(newKeys){
         var murmur = that.x64hash128(newKeys.join("~~~"), 31);
         return done(murmur);
