@@ -8,10 +8,10 @@
   if (typeof module !== "undefined" && module.exports) { module.exports = definition(); }
   else if (typeof define === "function" && define.amd) { define(definition); }
   else { context[name] = definition(); }
-})("Fingerprint2", this, function() {
+})("DF", this, function() {
   "use strict";
   var DEBUG = true;
-  var Fingerprint2 = function(options) {
+  var DF = function(options) {
     var defaultOptions = {
       swfContainerId: "fingerprintjs2",
       swfPath: "flash/compiled/FontList.swf"
@@ -20,7 +20,7 @@
     this.nativeForEach = Array.prototype.forEach;
     this.nativeMap = Array.prototype.map;
   };
-  Fingerprint2.prototype = {
+  DF.prototype = {
     extend: function(source, target) {
       if (source == null) { return target; }
       for (var k in source) {
@@ -783,5 +783,5 @@
       return ("00000000" + (h1[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h1[1] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[1] >>> 0).toString(16)).slice(-8);
     }
   };
-  return Fingerprint2;
+  return DF;
 });
