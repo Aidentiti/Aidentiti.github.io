@@ -1,29 +1,17 @@
 /*
-* AidentitDF 0.1.12 - Modern & flexible browser fingerprint library
+* AidentitDF 0.1.18 - Modern & flexible browser fingerprint library
 * 
 * Copyright (c) 2015 Andreas Wagner (anwaatwork@gmail.com)
-* Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 (function (name, context, definition) {
   "use strict";
   if (typeof module !== "undefined" && module.exports) { module.exports = definition(); }
   else if (typeof define === "function" && define.amd) { define(definition); }
   else { context[name] = definition(); }
-})("DF", this, function() {
+})("Fingerprint2", this, function() {
   "use strict";
   var DEBUG = true;
-  var DF = function(options) {
+  var Fingerprint2 = function(options) {
     var defaultOptions = {
       swfContainerId: "fingerprintjs2",
       swfPath: "flash/compiled/FontList.swf"
@@ -32,7 +20,7 @@
     this.nativeForEach = Array.prototype.forEach;
     this.nativeMap = Array.prototype.map;
   };
-  DF.prototype = {
+  Fingerprint2.prototype = {
     extend: function(source, target) {
       if (source == null) { return target; }
       for (var k in source) {
@@ -47,37 +35,29 @@
         console.log(msg);
       }
     },
-      
-      // keys = this.UAK(keys); User Agent Key
-      // keys = this.CSK(keys); Client Storage Key
-      // keys = this.TLK(keys); Time language Key
-      // keys = this.
     get: function(done){
       var keys = [];
-      keys = this.userAgentKey(keys);           // everything should be stable apart from Version Numbers (but they only increase)
-      keys = this.languageKey(keys);            // should be stable
-      keys = this.colorDepthKey(keys);          // should be stable
-      keys = this.screenResolutionKey(keys);    // should be stable except for multi monitor usage - desktop/notebook only
-      keys = this.timezoneOffsetKey(keys);      // should be stable for a given location
-      keys = this.sessionStorageKey(keys);      // should be stable
-      keys = this.localStorageKey(keys);        // should be stable
-      keys = this.indexedDbKey(keys);           // should be stable
-      keys = this.addBehaviorKey(keys);         // should be stable
-      keys = this.openDatabaseKey(keys);        // should be stable
-      keys = this.cpuClassKey(keys);            // should be stable
-      keys = this.platformKey(keys);            // should be stable
-      keys = this.doNotTrackKey(keys);          // should be stable
-      keys = this.pluginsKey(keys);             // order should be stable - Version Numbers change (but only increase) - plugins may be removed or added - useless for mobile devices
-      keys = this.canvasKey(keys);              // should be stable
-      keys = this.webglKey(keys);               // should be stable
-      // keys = this.protectKey(keys);              // should be stable
-      // keys = this.webrtcKey(keys);               // should be stable if available
-      var that = this;                          // Font order should be stable - Fonts may be removed or added - useless on mobile devices
+      keys = this.userAgentKey(keys);
+      keys = this.languageKey(keys);
+      keys = this.colorDepthKey(keys);
+      keys = this.screenResolutionKey(keys);
+      keys = this.timezoneOffsetKey(keys);
+      keys = this.sessionStorageKey(keys);
+      keys = this.localStorageKey(keys);
+      keys = this.indexedDbKey(keys);
+      keys = this.addBehaviorKey(keys);
+      keys = this.openDatabaseKey(keys);
+      keys = this.cpuClassKey(keys);
+      keys = this.platformKey(keys);
+      keys = this.doNotTrackKey(keys);
+      keys = this.pluginsKey(keys);
+      keys = this.canvasKey(keys);
+      keys = this.webglKey(keys);
+      var that = this;
       this.fontsKey(keys, function(newKeys){
         var murmur = that.x64hash128(newKeys.join("~~~"), 31);
         return done(murmur);
       });
-        console.log(keys.toString());
     },
 
     userAgentKey: function(keys) {
@@ -194,8 +174,7 @@
           return done(keys);
         }
         return done(this.jsFontsKey(keys));
-      }
-      // we do flash if swfobject is loaded
+      }      
       if(!this.hasSwfObjectLoaded()){
         if(DEBUG){
           this.log("Swfobject is not detected, Flash fonts enumeration is skipped");
@@ -222,12 +201,12 @@
         keys.push(fonts.join(";"));
         done(keys);
       });
-    },
-    jsFontsKey: function(keys) {
-      var baseFonts = ["monospace", "sans-serif", "serif"];
-      var testString = "mmmmmmmmmmlli";
+    },    
+    jsFontsKey: function(keys) {     
+      var baseFonts = ["monospace", "sans-serif", "serif"];      
+      var testString = "mmmmmmmmmmlli";      
       var testSize = "72px";
-      var h = document.getElementsByTagName("body")[0];
+      var h = document.getElementsByTagName("body")[0];      
       var s = document.createElement("span");
       s.style.fontSize = testSize;
       s.innerHTML = testString;
@@ -445,8 +424,7 @@
       } catch(e) {
         return true; 
       }
-    },
-    
+    },    
     hasLocalStorage: function () {
       try {
         return !!window.localStorage;
@@ -478,11 +456,10 @@
         return "doNotTrack: unknown";
       }
     },
-    getCanvasFp: function() {
-      // Very simple now, need to make it more complex (geo shapes etc)
+    getCanvasFp: function() {      
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");      
-      var txt = "Cwm fjordbank glyphs vext quiz, https://aidentiti.github.io ὠ";
+      var txt = "Cwm fjordbank glyphs vext quiz, https://aidentiti.github.io/ ὠ";
       ctx.textBaseline = "top";
       ctx.font = "70px 'Arial'";
       ctx.textBaseline = "alphabetic";
@@ -509,9 +486,8 @@
         return ext ? (anisotropy = gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT), 0 === anisotropy && (anisotropy = 2), anisotropy) : null;
       };
       gl = this.getWebglCanvas();
-      if(!gl) { return null; }     
+      if(!gl) { return null; }      
       var result = [];
-      var canvas = document.createElement("canvas");
       var vShaderTemplate = "attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}";
       var fShaderTemplate = "precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}";
       var vertexPosBuffer = gl.createBuffer();
@@ -536,7 +512,7 @@
       gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize, gl.FLOAT, !1, 0, 0);
       gl.uniform2f(program.offsetUniform, 1, 1);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
-      result.push(canvas.toDataURL());
+      if (gl.canvas != null) result.push(gl.canvas.toDataURL());
       result.push("extensions:" + gl.getSupportedExtensions().join(";"));
       result.push("webgl aliased line width range:" + fa2s(gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE)));
       result.push("webgl aliased point size range:" + fa2s(gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)));
@@ -639,7 +615,7 @@
     },
 
     /// MurmurHash3 related functions
-
+    
     x64Add: function(m, n) {
       m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff];
       n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff];
@@ -657,7 +633,7 @@
       o[0] &= 0xffff;
       return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]];
     },
-   
+    
     x64Multiply: function(m, n) {
       m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff];
       n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff];
@@ -724,7 +700,6 @@
       h = this.x64Xor(h, [0, h[0] >>> 1]);
       return h;
     },
-
     
     x64hash128: function (key, seed) {
       key = key || "";
@@ -808,5 +783,5 @@
       return ("00000000" + (h1[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h1[1] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[1] >>> 0).toString(16)).slice(-8);
     }
   };
-  return DF;
+  return Fingerprint2;
 });
