@@ -31,8 +31,7 @@
         <h3>Your NF id is:</h3>
             <h3 id="NF"></h3>
             <script>
-                var d3 = new Date();
-                var p = 1;
+                var d3 = new Date();                               
                 $(document).ready(function() {
                     $.ajax({
                         url: 'http://api.hostip.info/get_json.php?position=true',
@@ -42,14 +41,14 @@
                             $('#NF').append(position.ip + '|' + position.lat + ',' + position.lng);
                             
                             var pos = position.ip + '|' + position.lat + ',' + position.lng;
-                            console.log(pos);                      
-                            p = pos;
+                            console.log(pos);    
                         },
                         error: function() {
                             $('#NF').append('geolocation not supported');
                         }
                     });              
                 var d4 = new Date();
+                var t2 = (d4 - d3);    
                 console.log("Time took to get NF: " + (d4 - d3) + "ms");
                     
                 });
@@ -69,7 +68,8 @@
                 var fp = new DF();
                 fp.get(function(result) {
                   var d2 = new Date();
-                  console.log("Time took to calculate DF: " + (d2 - d1) + "ms");
+                    var t1 = (d2 - d1);
+                  console.log("Time took to calculate DF: " + t1 + "ms");
                   console.log(result);
                   document.getElementById("fp").innerHTML = result;
                 });
@@ -100,7 +100,7 @@
 
 
 
-<!-- jQuery--><script src="js/jquery.min.js"></script><!-- Default Scripts--><script src="js/moment.min.js"></script><script src="js/bootstrap.min.js"></script><!-- scripts for this template--><script src="js/html5shiv.js"></script><script src="js/jquery.easing.1.3.js"></script></script>
+<!-- jQuery--><script src="js/jquery.min.js"></script><!-- Default Scripts--><script src="js/moment.min.js"></script><script src="js/bootstrap.min.js"></script><!-- scripts for this template--><script src="js/html5shiv.min.js"></script><script src="js/jquery.easing.1.3.min.js"></script></script>
 <!-- Google Analytics -->
 <script>function getCookie( regex, cookies ) {
     var cookie = regex.exec(cookies)||[];
