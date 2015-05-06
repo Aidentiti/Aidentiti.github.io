@@ -1,5 +1,5 @@
 /*
-* AidentitDF 0.1.18 - Modern & flexible browser fingerprint library
+* AidentitDF 0.2.0 - Modern & flexible browser fingerprint library
 * 
 * Copyright (c) 2015 Andreas Wagner (anwaatwork@gmail.com)
 */
@@ -9,7 +9,8 @@
   else if (typeof define === "function" && define.amd) { define(definition); }
   else { context[name] = definition(); }
 })("DF", this, function() {
-  "use strict";
+  "use strict";    
+    
   var DEBUG = true;
   var DF = function(options) {
     var defaultOptions = {
@@ -18,8 +19,9 @@
     };
     this.options = this.extend(options, defaultOptions);
     this.nativeForEach = Array.prototype.forEach;
-    this.nativeMap = Array.prototype.map;
-  };
+    this.nativeMap = Array.prototype.map;        
+  }; 
+      
   DF.prototype = {
     extend: function(source, target) {
       if (source == null) { return target; }
@@ -36,120 +38,74 @@
       }
     },
     get: function(done){
-      var keys = [];
-      keys = this.userAgentKey(keys);
-      keys = this.languageKey(keys);
-      keys = this.colorDepthKey(keys);
-      keys = this.screenResolutionKey(keys);
-      keys = this.timezoneOffsetKey(keys);
+      var keys = [];          
+      //1.DRK - done
+      keys = this.canvasKey(keys);
+      keys = this.webglKey(keys);
+      //2.DTK - done
+      keys = this.deviceTypeKey(keys);
+      keys = this.deviceKey(keys); 
+      keys = this.browserKey(keys);
+      keys = this.engineKey(keys); 
+      keys = this.javaKey(keys); 
+      keys = this.flashKey(keys);         
+      keys = this.silverlightKey(keys);
+      //3.RTC
+      //keys = this.webRTCKey(keys);        
+      //4.CSK - done    
       keys = this.sessionStorageKey(keys);
       keys = this.localStorageKey(keys);
       keys = this.indexedDbKey(keys);
       keys = this.addBehaviorKey(keys);
       keys = this.openDatabaseKey(keys);
+      keys = this.cookieKey(keys);             
+      //5.DHK - done    
+      keys = this.colorDepthKey(keys);      
       keys = this.cpuClassKey(keys);
+      keys = this.hardwareConcurrencyKey(keys); 
       keys = this.platformKey(keys);
-      keys = this.doNotTrackKey(keys);
+      keys = this.operatingSystemKey(keys);
+      keys = this.maxTouchPointsKey(keys);               
+      //6.DSK
+      keys = this.doNotTrackKey(keys);        
+      //keys = this.CFPDKey(keys);                 
+      //7.DEK               
       keys = this.pluginsKey(keys);
-      keys = this.canvasKey(keys);
-      keys = this.webglKey(keys);
+      keys = this.pluginsLengthKey(keys);
+      //keys = this.fontsKey(keys);
+      //keys = this.fontsLengthKey(keys);
+      //8.TLK - done
+      keys = this.userlanguageKey(keys); 
+      keys = this.systemlanguageKey(keys);
+      keys = this.timezoneOffsetKey(keys);     
+      //9.DRK - done
+      //keys = this.screenResolutionKey(keys);
+      //keys = this.availScreenResolutionKey(keys);     
+      //10.DVK      
+      //keys = this.browserVersion(keys);       -Probleme
+      //keys = this.engineVersion(keys); 
+      //keys = this.browserVersion(keys);
+      //keys = this.osVersion(keys);
+      //keys = this.javaVersion(keys);          -Probleme
+      //keys = this.flashVersion(keys);         -Probleme
+      //keys = this.silverlightVersion(keys);   -Probleme
+      //keys = this.pluginVersion(keys);  
+    
+      //11.UAK
+      //keys = this.userAgentKey(keys); 
+        
+        
       var that = this;
-      this.fontsKey(keys, function(newKeys){
+      this.fontsKey(keys, function(newKeys){         
         var murmur = that.x64hash128(newKeys.join("~~~"), 31);
         return done(murmur);
-      });
-    },
-
-    userAgentKey: function(keys) {
-      if(!this.options.excludeUserAgent) {
-        keys.push(navigator.userAgent);
-      }
-      return keys;
-    },
-    languageKey: function(keys) {
-      if(!this.options.excludeLanguage) {
-        keys.push(navigator.language);
-      }
-      return keys;
-    },
-    colorDepthKey: function(keys) {
-      if(!this.options.excludeColorDepth) {
-        keys.push(screen.colorDepth);
-      }
-      return keys;
-    },
-    screenResolutionKey: function(keys) {
-      if(!this.options.excludeScreenResolution) {
-        var resolution = this.getScreenResolution();
-        if (typeof resolution !== "undefined"){ 
-          keys.push(resolution.join("x"));
-        }
-      }
-      return keys;
-    },
-    getScreenResolution: function () {
-      var resolution;
-      if(this.options.detectScreenOrientation) {
-        resolution = (screen.height > screen.width) ? [screen.height, screen.width] : [screen.width, screen.height];
-      } else {
-        resolution = [screen.height, screen.width];
-      }
-      return resolution;
-    },
-    timezoneOffsetKey: function(keys) {
-      if(!this.options.excludeTimezoneOffset) {
-        keys.push(new Date().getTimezoneOffset());
-      }
-      return keys;
-    },
-    sessionStorageKey: function(keys) {
-      if(!this.options.excludeSessionStorage && this.hasSessionStorage()) {
-        keys.push("sessionStorageKey");
-      }
-      return keys;
-    },
-    localStorageKey: function(keys) {
-      if(!this.options.excludeSessionStorage && this.hasLocalStorage()) {
-        keys.push("localStorageKey");
-      }
-      return keys;
-    },
-    indexedDbKey: function(keys) {
-      if(!this.options.excludeIndexedDB && this.hasIndexedDB()) {
-        keys.push("indexedDbKey");
-      }
-      return keys;
-    },
-    addBehaviorKey: function(keys) {      
-      if(document.body && !this.options.excludeAddBehavior && document.body.addBehavior) {
-        keys.push("addBehaviorKey");
-      }
-      return keys;
-    },
-    openDatabaseKey: function(keys) {
-      if(!this.options.excludeOpenDatabase && window.openDatabase) {
-        keys.push("openDatabase");
-      }
-      return keys;
-    },
-    cpuClassKey: function(keys) {
-      if(!this.options.excludeCpuClass) {
-        keys.push(this.getNavigatorCpuClass());
-      }
-      return keys;
-    },
-    platformKey: function(keys) {
-      if(!this.options.excludePlatform) {
-        keys.push(this.getNavigatorPlatform());
-      }
-      return keys;
-    },
-    doNotTrackKey: function(keys) {
-      if(!this.options.excludeDoNotTrack) {
-        keys.push(this.getDoNotTrack());
-      }
-      return keys;
-    },
+      });        
+      console.log(keys.toString());
+    },      
+    getBrowserData: function () {
+        return browserData;
+    },    
+    //1.DRK----------------------------------------------------------------------------------  
     canvasKey: function(keys) {
       if(!this.options.excludeCanvas && this.isCanvasSupported()) {
         keys.push(this.getCanvasFp());
@@ -161,7 +117,154 @@
         keys.push(this.getWebglFp());
       }
       return keys;
+    },  
+    //2.DTK----------------------------------------------------------------------------------
+    deviceTypeKey: function(keys) {
+      if(!this.options.excludeUserAgent) {
+        keys.push(this.getDeviceType());
+      }
+      return keys;
     },
+    deviceKey: function(keys) {
+      if(!this.options.excludeUserAgent) {
+        keys.push(this.getDevice());
+      }
+      return keys;
+    },  
+    browserKey: function(keys) {
+      if(!this.options.excludeUserAgent) {
+        keys.push(this.getBrowser());
+      }
+      return keys;
+    },
+    engineKey: function(keys) {
+      if(!this.options.excludeUserAgent) {
+        keys.push(this.getEngine());
+      }
+      return keys;
+    },     
+    javaKey: function(keys) {
+      if(!this.options.excludeJava && navigator.javaEnabled()) {
+        keys.push("1");
+      } else {
+        keys.push("0");
+      }
+      return keys;
+    },
+    flashKey: function(keys) {
+      if(!this.options.excludeFlash && this.hasFlashEnabled()) {
+        keys.push("1");
+      } else {
+        keys.push("0");
+      }
+      return keys;
+    },  
+    silverlightKey: function(keys) {
+      if(!this.options.excludeSilverlight && this.hasSilverlightEnabled()) {
+        keys.push("1");
+      } else {
+        keys.push("0");
+      }
+      return keys;
+    },
+    //3.RTC----------------------------------------------------------------------------------
+      
+    //4.CSK----------------------------------------------------------------------------------  
+    sessionStorageKey: function(keys) {
+      if(!this.options.excludeSessionStorage && this.hasSessionStorage()) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }      
+      return keys;
+    },
+    localStorageKey: function(keys) {
+      if(!this.options.excludeSessionStorage && this.hasLocalStorage()) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }  
+      return keys;
+    },
+    indexedDbKey: function(keys) {
+      if(!this.options.excludeIndexedDB && this.hasIndexedDB()) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }  
+      return keys;
+    },
+    addBehaviorKey: function(keys) {      
+      if(document.body && !this.options.excludeAddBehavior && document.body.addBehavior) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }  
+      return keys;
+    },
+    openDatabaseKey: function(keys) {
+      if(!this.options.excludeOpenDatabase && window.openDatabase) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }  
+      return keys;
+    },
+    cookieKey: function(keys) {
+      if(!this.options.excludeCookie && navigator.cookieEnabled) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }  
+      return keys;
+    },    
+    //5.DHK----------------------------------------------------------------------------------  
+    colorDepthKey: function(keys) {
+      if(!this.options.excludeColorDepth) {
+        keys.push(screen.colorDepth);
+      }
+      return keys;
+    },    
+    cpuClassKey: function(keys) {
+      if(!this.options.excludeCpuClass) {
+        keys.push(this.getNavigatorCpuClass());
+      }
+      return keys;
+    },
+    hardwareConcurrencyKey: function(keys) {
+      if(!this.options.excludeHardwareConcurrency) {
+        keys.push(this.getNavigatorHardwareConcurrency());
+      }
+      return keys;
+    },  
+    platformKey: function(keys) {
+      if(!this.options.excludePlatform) {
+        keys.push(this.getNavigatorPlatform());
+      }
+      return keys;
+    },
+    operatingSystemKey: function(keys) {
+      if(!this.options.excludeOperatingSystem) {
+        keys.push(this.getOperatingSystem());
+      }
+      return keys;
+    },  
+    maxTouchPointsKey: function(keys) {
+      if(!this.options.maxTouchPoints) {
+        keys.push(this.getNavigatorMaxTouchPoints());
+      }
+      return keys;
+    },    
+    //6.DSK----------------------------------------------------------------------------------  
+    doNotTrackKey: function(keys) {
+      if(!this.options.excludeDoNotTrack && !this.getDoNotTrack()) {
+        keys.push("1");
+      } else {
+        keys.push("0"); 
+      }  
+      return keys;
+    },      
+    //7.DEK----------------------------------------------------------------------------------      
     fontsKey: function(keys, done) {
       if(this.options.excludeFlashFonts) {
         if(DEBUG){
@@ -361,9 +464,13 @@
           available.push(fontList[i]);
         }
       }
-      keys.push(available.join(";"));
-      return keys;
+      keys.push(available.join(";"));      
+      return keys;        
     },
+    fontsLengthKey: function(keys) {      
+      return String(fontsKey).replace(/[^;]+/g, '').length;
+    },      
+      
     pluginsKey: function(keys) {
       if(this.isIE()){
         keys.push(this.getIEPluginsString());
@@ -371,15 +478,30 @@
         keys.push(this.getRegularPluginsString());
       }
       return keys;
-    },
+    },    
     getRegularPluginsString: function () {
-      return this.map(navigator.plugins, function (p) {
-        var mimeTypes = this.map(p, function(mt){
-          return [mt.type, mt.suffixes].join("~");
-        }).join(",");
-        return [p.name, p.description, mimeTypes].join("::");
-      }, this).join(";");
+        var pluginsList = "";
+        var plL = "";
+        for (var i=0; i<navigator.plugins.length; i++) {
+                if( i == navigator.plugins.length-1 ) {
+                    plL = navigator.plugins[i].name;
+                    pluginsList += plL.replace(/[0-9,\.]+/g,'');
+                    
+                }else{
+                    plL = navigator.plugins[i].name;
+                    pluginsList += plL.replace(/[0-9,\.]+/g,'') + ", ";                    
+                }
+        }
+        return pluginsList;
     },
+    pluginsLengthKey: function(keys) {
+      if(!this.options.excludePluginsLegth && navigator.plugins.length) {
+        keys.push(navigator.plugins.length);
+      } else {
+        keys.push("unknown"); 
+      }  
+      return keys;
+    },            
     getIEPluginsString: function () {
       if(window.ActiveXObject){
         var names = [
@@ -418,6 +540,219 @@
         return "";
       }
     },
+    //8.TLK----------------------------------------------------------------------------------  
+    userlanguageKey: function(keys) {
+      if(!this.options.excludeLanguage) {
+        keys.push(navigator.language);
+      }
+      return keys;
+    },
+    systemlanguageKey: function(keys) {
+      if(!this.options.excludeLanguage) {
+        keys.push(this.getSystemLanguage());
+      }
+      return keys;
+    },
+    timezoneOffsetKey: function(keys) {
+      if(!this.options.excludeTimezoneOffset) {
+        keys.push(new Date().getTimezoneOffset());
+      }
+      return keys;
+    },     
+    //9.DRK----------------------------------------------------------------------------------
+    screenResolutionKey: function(keys) {
+      if(!this.options.excludeScreenResolution) {
+        var resolution = this.getScreenResolution();
+        if (typeof resolution !== "undefined"){ 
+          keys.push(resolution.join("x"));
+        }
+      }
+      return keys;
+    },
+    availScreenResolutionKey: function(keys) {
+      if(!this.options.excludeScreenResolution) {
+        var availresolution = this.getAvailableResolution();
+        if (typeof availresolution !== "undefined"){ 
+          keys.push(availresolution.join("x"));
+        }
+      }
+      return keys;
+    },
+    getScreenResolution: function () {
+      var resolution;
+      if(this.options.detectScreenOrientation) {
+        resolution = (screen.height > screen.width) ? [screen.height, screen.width] : [screen.width, screen.height];
+      } else {
+        resolution = [screen.height, screen.width];
+      }
+      return resolution;
+    },
+    getAvailableResolution: function () {
+      var availresolution;
+      if(this.options.detectScreenOrientation) {
+        availresolution = (screen.availHeight > screen.availWidth) ? [screen.availHeight, screen.availWidth] : [screen.availWidth, screen.availHeight];
+      } else {
+        availresolution = [screen.availHeight, screen.availWidth];
+      }
+      return availresolution;             
+    },        
+    //10.DVK---------------------------------------------------------------------------------- 
+    browserVersionKey: function(keys) {
+      if(!this.options.excludeLanguage) {
+        keys.push(this.getBrowserVersion);
+      }
+      return keys;
+    },
+      
+    javaVersionKey: function(keys) {
+      if(!this.options.excludeJava && navigator.javaEnabled()) {
+        keys.push(deployJava.getJREs().toString());
+      } else {
+        keys.push("0");
+      }        
+      return keys;
+    },
+        
+    silverlightVersionKey: function(keys) {
+      if(!this.options.excludeSilverlight && this.hasSilverlightEnabled() && this.getSilverlightVersion()) {
+        keys.push("1");
+      } else {
+        keys.push("0");
+      }
+      return keys;
+    },      
+    //?.UAK----------------------------------------------------------------------------------
+    userAgentKey: function(keys) {
+      if(!this.options.excludeUserAgent) {
+        keys.push(navigator.userAgent);
+      }
+      return keys;
+    },  
+          
+    //Routines----------------------------------------------------------------------------------  
+    getDeviceType: function () {
+      if(!!navigator.userAgent.match(/(Android|iPad|SCH-I800|xoom|kindle|PlayBook|kindle fire)/i)){
+        return "tablet";
+      } 
+      if (!!navigator.userAgent.match(/(Android.*Mobile|iPhone|iPod|blackberry|bb10|android 0.5|htc|lg|midp|mmp|mobile|nokia|opera mini|palm|pocket|psp|sgh|smartphone|symbian|treo mini|Playstation Portable|SonyEricsson|Samsung|MobileExplorer|PalmSource|rim|Benq|Windows Phone|Windows Mobile|IEMobile|Windows CE|Nintendo Wii)/i)){
+        return "phone";
+      }
+      else {
+        return "PC";
+      }      
+    },
+    getDevice: function () {
+      if(!!navigator.userAgent.match(/(iPad)/i)){
+        return "iPad";
+      } 
+      if (!!navigator.userAgent.match(/(iPhone)/i)){
+        return "iPhone";
+      }
+        if (!!navigator.userAgent.match(/(iPod)/i)){
+        return "iPod";
+      }
+      else {
+        return "unknown";
+      }      
+    },       
+    getBrowser: function () {
+      if(!!navigator.userAgent.match(/(Opera)/i)){
+        return "Opera";
+      } 
+      if (!!navigator.userAgent.match(/(MSIE|Trident)/i)){
+        return "Microsoft Internet Explorer";
+      }
+      if (!!navigator.userAgent.match(/(Chrome|CriOS)/i)){
+        return "Chrome";
+      }
+      if (!!navigator.userAgent.match(/(Safari)/i)){
+        return "Safari";
+      }
+      if (!!navigator.userAgent.match(/(Firefox)/i)){
+        return "Firefox";
+      }
+      else {
+        return "unknown";
+      }      
+    },               
+    //ToDo       
+    getEngine: function () {  
+      if(!!navigator.userAgent.match(/(Amaya\/)/i)){
+        return "Amaya";
+      }
+      if(!!navigator.userAgent.match(/(Blink\/)/i)){
+        return "Blink";
+      }     
+      if (!!navigator.userAgent.match(/(Gecko\/)/i)){
+        return "Gecko";
+      }
+      if (!!navigator.userAgent.match(/(iCab\/)/i)){
+        return "iCab";
+      }
+      if (!!navigator.userAgent.match(/(KHTML\/)/i)){
+        return "KHTML";
+      }
+      if (!!navigator.userAgent.match(/(Links\/)/i)){
+        return "Links";
+      }
+      if (!!navigator.userAgent.match(/(Lynx\/)/i)){
+        return "Lynx";
+      }
+      if (!!navigator.userAgent.match(/(NetFront\/)/i)){
+        return "NetFront";
+      }
+      if (!!navigator.userAgent.match(/(NetSurf\/)/i)){
+        return "NetSurf";
+      }
+      if (!!navigator.userAgent.match(/(Presto)/i)){
+        return "Presto";
+      }
+      if (!!navigator.userAgent.match(/(Tasman\/)/i)){
+        return "Tasman";
+      }
+      if (!!navigator.userAgent.match(/(Trident\/)/i)){
+        return "Trident";
+      }
+      if (!!navigator.userAgent.match(/(w3m\/)/i)){
+        return "w3m";
+      }
+      if (!!navigator.userAgent.match(/(WebKit\/)/i)){
+        return "WebKit";
+      }       
+      else {
+        return "unknown";
+      }      
+    },
+    //ToDo  
+      getEngineVersion: function () {  
+      if(browserData.engine.version) {
+        return browserData.engine.version;
+      } else {
+        return "unknown";
+      }
+    },
+    hasFlashEnabled: function () {
+      var objPlugin = navigator.plugins["Shockwave Flash"];
+      if (objPlugin) {
+        return true;
+        }
+        return false;
+    },
+    hasSilverlightEnabled: function () {
+      var objPlugin = navigator.plugins["Silverlight Plug-In"];
+      if (objPlugin) {
+        return true;
+        }
+        return false;
+    },
+    //ToDo  
+    getSilverlightVersion: function () {
+      if (this.isSilverlight()) {
+        var objPlugin = navigator.plugins["Silverlight Plug-In"];
+        return objPlugin.description;
+        }
+        return "";
+    },  
     hasSessionStorage: function () {
       try {
         return !!window.sessionStorage;
@@ -437,25 +772,108 @@
     },
     getNavigatorCpuClass: function () {
       if(navigator.cpuClass){
-        return "navigatorCpuClass: " + navigator.cpuClass;
+        return navigator.cpuClass;
       } else {
-        return "navigatorCpuClass: unknown";
+        return "unknown";
       }
     },
+    getNavigatorHardwareConcurrency: function () {
+      if(navigator.hardwareConcurrency){
+        return navigator.hardwareConcurrency;
+      } else {
+        return "unknown";
+      }
+    },      
     getNavigatorPlatform: function () {
       if(navigator.platform) {
-        return "navigatorPlatform: " + navigator.platform;
+        return navigator.platform;
       } else {
-        return "navigatorPlatform: unknown";
+        return "unknown";
       }
     },
+    getOperatingSystem: function () {
+      var nVer = navigator.appVersion;
+            var nAgt = navigator.userAgent;
+            var osVersion = "unknown";
+            var os = "unknown";            
+            var clientStrings = [
+                { s: 'Windows 3.11', r: /Win16/ },
+                { s: 'Windows 95', r: /(Windows 95|Win95|Windows_95)/ },
+                { s: 'Windows ME', r: /(Win 9x 4.90|Windows ME)/ },
+                { s: 'Windows 98', r: /(Windows 98|Win98)/ },
+                { s: 'Windows CE', r: /Windows CE/ },
+                { s: 'Windows 2000', r: /(Windows NT 5.0|Windows 2000)/ },
+                { s: 'Windows XP', r: /(Windows NT 5.1|Windows XP)/ },
+                { s: 'Windows Server 2003', r: /Windows NT 5.2/ },
+                { s: 'Windows Vista', r: /Windows NT 6.0/ },
+                { s: 'Windows 7', r: /(Windows 7|Windows NT 6.1)/ },
+                { s: 'Windows 8.1', r: /(Windows 8.1|Windows NT 6.3)/ },
+                { s: 'Windows 8', r: /(Windows 8|Windows NT 6.2)/ },
+                { s: 'Windows NT 4.0', r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/ },
+                { s: 'Windows ME', r: /Windows ME/ },
+                { s: 'Android', r: /Android/ },
+                { s: 'Open BSD', r: /OpenBSD/ },
+                { s: 'Sun OS', r: /SunOS/ },
+                { s: 'Linux', r: /(Linux|X11)/ },
+                { s: 'iOS', r: /(iPhone|iPad|iPod)/ },
+                { s: 'Mac OS X', r: /Mac OS X/ },
+                { s: 'Mac OS', r: /(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/ },
+                { s: 'QNX', r: /QNX/ },
+                { s: 'UNIX', r: /UNIX/ },
+                { s: 'BeOS', r: /BeOS/ },
+                { s: 'OS/2', r: /OS\/2/ },
+                { s: 'Search Bot', r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/ }
+            ];
+            for (var id in clientStrings) {
+                var cs = clientStrings[id];
+                if (cs.r.test(nAgt)) {
+                    os = cs.s;
+                    break;
+                }
+            }           
+
+            if (/Windows/.test(os)) {
+                osVersion = /Windows (.*)/.exec(os)[1];
+                os = 'Windows';
+            }
+            switch (os) {
+                case 'Mac OS X':
+                    osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+                    break;
+
+                case 'Android':
+                    osVersion = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+                    break;
+
+                case 'iOS':
+                    osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
+                    osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+                    break;
+            }
+        return os;     
+    },  
+    getNavigatorMaxTouchPoints: function () {
+      if(navigator.maxTouchPoints) {
+        return navigator.maxTouchPoints;
+      } else {
+        return "unknown";
+      }
+    },  
+    getSystemLanguage: function () {
+      if(navigator.systemLanguage) {
+        return navigator.systemLanguage;
+      } else {
+        return "unknown";
+      }
+    },  
     getDoNotTrack: function () {
       if(navigator.doNotTrack) {
-        return "doNotTrack: " + navigator.doNotTrack;
+        return navigator.doNotTrack;
       } else {
-        return "doNotTrack: unknown";
+        return "unknown";
       }
     },
+      
     getCanvasFp: function() {      
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");      
