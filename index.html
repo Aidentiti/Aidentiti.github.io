@@ -16,7 +16,7 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
-<script src="js/device.min.js"></script>
+<script src="js/aidentiti.min.js"></script>
 <script src="js/jquery.min.js"></script>
 
 </head><body>
@@ -57,15 +57,16 @@
     </div>
         
     <div class="col-lg-6">        
-        <div class="col-lg-6">
         <div style="height:inherit; width:100%;word-wrap:break-word" class="well text-left"><h6 id="jsonView"></h6>
-        <h3>Your CID is:</h3>
-            <h3><i id="cid"/></h3>
-                <script>                    
-                    document.getElementById("cid").innerHTML += "\n" + JSON.stringify(DFcv.cid(), null, 2);                    
+        <h3>Your DF id is:</h3>
+            <h3><i id="fp"/></h3>            
+              <script>                
+                var fp = new DF();
+                DFcv.cid(function(result) {                  
+                  document.getElementById("fp").innerHTML = result;
+                });
               </script>
-        </div>        
-    </div> 
+        </div>
     </div>    
             
     </div>
@@ -105,14 +106,14 @@ try {
     // GA dimensions
     var dimensions = {
         'dimension1': getCookie(/_ga=GA[0-9].[0-9].(\d+)/, document.cookie).pop()||'unknown',
-        'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown'               
+        'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown',
+        'dimension3': document.getElementById("fp").innerHTML||'unknown',
+        'dimension4': document.getElementById("fp").innerHTML||'unknown'        
     };
     
     // GA actions
     ga('create', 'UA-60791644-1', 'auto');
     ga('require', 'displayfeatures');
-    ga('set', 'dimension1', window.innerHeight > window.innerWidth ? 'Portrait' : 'Landscape');
-    ga('set', 'dimension2', DFcv.cid);
     ga('send', 'pageview', dimensions);
 } catch (e) { console.error(e) }</script>
 </body></html>
