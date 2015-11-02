@@ -106,8 +106,7 @@ try {
     var dimensions = {
         'dimension1': getCookie(/_ga=GA[0-9].[0-9].(\d+)/, document.cookie).pop()||'unknown',
         'dimension2': getCookie(/_utma=[0-9]+.(\d+)/, document.cookie).pop()||'unknown',
-        'dimension3': document.getElementById("cid").innerHTML||'unknown',
-        'dimension4': document.getElementById("fp").innerHTML||'unknown'        
+        'dimension3': JSON.stringify(DFcv.cid()||'unknown'               
     };
     
     // GA actions
