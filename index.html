@@ -42,21 +42,7 @@
         </div>
         
     </div> 
-    <div class="col-lg-6">
-        
-        <div style="height:inherit; width:100%;word-wrap:break-word" class="well text-left"><h6 id="jsonView"></h6>
-        <h3>Extracted Information:</h3>
-            <h4><i id="demo"/></h4>
-            <iframe id="iframe" sandbox="allow-same-origin" style="display: none"></iframe>
-              <script>
-                var d3 = new Date();  
-                document.getElementById("demo").innerHTML += "\n" + JSON.stringify(DFcv.ddata(), null, 2);
-                  document.getElementById("demo").innerHTML += "\n" + JSON.stringify(DFcv.cdata(), null, 2);
-                var d4 = new Date();
-                var t2 = (d4 - d3);    
-                console.log("Time took to extract Information: " + t2 + "ms");  
-              </script>
-        </div>
+    
     </div>   
             
     </div>
