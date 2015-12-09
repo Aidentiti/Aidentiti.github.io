@@ -1,4 +1,4 @@
-// device.js - Version: 1.1.0
+// device.js - Version: 1.1.1
 /*
  * Copyright (c) 2010-2015 by Andreas Wagner. ALL RIGHTS RESERVED.
  * This document contains CONFIDENTIAL, PROPRIETARY, PATENTABLE 
@@ -6,6 +6,7 @@
  * not be reproduced or adapted, in whole or in part, without prior
  * written permission from Andreas Wagner.
  * 
+ * Check if murmurhash should really be used for canvas and WebGL - add battery level and detect private mode
  */
 
 (function() {
@@ -14,6 +15,26 @@
     DFcv.cache = {};
     DFcv.clearCache = function() {
       this.cache = {}
+    }
+    
+    setCookie = function(a, b, c) {
+        "use strict";
+        var d, e;
+        try {
+            d = new Date, d.setDate(d.getDate() + c), e = escape(b) + (null === c ? "" : "; expires=" + d.toUTCString()), document.cookie = a + "=" + e
+        } catch (f) {
+            return glbOnError
+        }
+    }
+
+    getCookie = function(a) {
+        "use strict";
+        var b, c, d;
+        try {
+            return b = document.cookie, c = b.indexOf(" " + a + "="), -1 === c && (c = b.indexOf(a + "=")), -1 === c ? b = null : (c = b.indexOf("=", c) + 1, d = b.indexOf(";", c), -1 === d && (d = b.length), b = unescape(b.substring(c, d))), b
+        } catch (e) {
+            return "NA"
+        }
     }
     
     /* UUID */
@@ -28,7 +49,7 @@
             d = Math.floor(d/16);
             return (c=='x' ? r : (r&0x3|0x8)).toString(16);
         });
-        uuid = uid + "-|-" + DFcv.cid();
+        uuid = "DID:" + DFcv.cid() + "," + "DT:" + uid;
         window.name = uuid;
         return uuid;
         }
@@ -55,10 +76,10 @@
       var sid = mmh3(JSON.stringify(DFcv.scrdepth()) + ":" + JSON.stringify(DFcv.scrres()));
       var fid = mmh3(JSON.stringify(DFcv.fonts())); 
       var bid = mmh3(JSON.stringify(DFcv.browser()));
-      var gid = mmh3(JSON.stringify(DFcv.canvas()) + ":" + JSON.stringify(DFcv.canvas2d()));
+      var gid = mmh3(JSON.stringify(DFcv.canvas3d()));
       var wid = mmh3(JSON.stringify(DFcv.webgl()));
       var rid = mmh3(JSON.stringify(DFcv.r()));    
-      return did + "-" + sid + "-" + fid + "-" + bid + "-" + gid + "-" + wid + "-" + rid
+      return did + "-" + sid + ":" + fid + ":" + bid + "-" + gid + "-" + wid + "-" + rid
     }
 
     /* Get Features */
@@ -77,17 +98,18 @@
         webgl: DFcv.webgl(), 
         rtc: DFcv.r(),
         rtc1: DFcv.r1(),        
-        time0: ((Date.now() - a) / 1e3).toFixed(3) 
+        t0: ((Date.now() - a) / 1e3).toFixed(3) 
       }  
     }
     
     DFcv.cdata = function() {
         var b = Date.now(); 
       return {
-        uuid: DFcv.uuid(),  
-        connection: DFcv.connection(),                  
-        context: DFcv.context(),  
-        time1: ((Date.now() - b) / 1e3).toFixed(3) 
+        dt: DFcv.uuid(),
+        cookie: DFcv.cookie(),
+        context: DFcv.context(),   
+        connection: DFcv.connection(),                           
+        t1: ((Date.now() - b) / 1e3).toFixed(3) 
       }  
     }
 
@@ -724,7 +746,19 @@
           return gl;
         }
 
+    /* Cookie Features */
+        
     /* Connection Features */
+        
+    DFcv.cookie = function() {     
+      "use strict";
+        var a, b, c;
+        try {
+            return a = DFcv.uuid(), b = getCookie("DT"), null === b && (setCookie("DT", a, 365), c = "new" + "=" + a), b === a && (setCookie("DT", a, 365),  c = "existing" + "=" + a), b !== a && (setCookie("DT", a, 365), c = "replace" + "=" + b + "/" + a), c            
+        } catch (e) {
+            return "NA"
+        }
+    }   
 
     DFcv.connection = function() {     
       return {     
